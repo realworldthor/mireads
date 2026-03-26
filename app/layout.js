@@ -6,7 +6,7 @@ import Navbar from '@/components/Navbar';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
-  title: 'BookBlitz - Books Delivered in 10 Minutes',
+  title: 'mireads - Books Delivered in 10 Minutes',
   description: 'Quick commerce books delivery platform',
 };
 
