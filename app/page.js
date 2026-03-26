@@ -29,14 +29,14 @@ const slides = [
 ];
 
 const categories = [
-  { icon: '📖', name: 'Fiction' },
-  { icon: '💼', name: 'Business' },
-  { icon: '🧠', name: 'Self Help' },
-  { icon: '🔭', name: 'Science' },
-  { icon: '🏛️', name: 'History' },
-  { icon: '🐉', name: 'Fantasy' },
-  { icon: '💰', name: 'Finance' },
-  { icon: '🎨', name: 'Art' },
+  { name: 'Fiction' },
+  { name: 'Business' },
+  { name: 'Self Help' },
+  { name: 'Science' },
+  { name: 'History' },
+  { name: 'Fantasy' },
+  { name: 'Finance' },
+  { name: 'Art' },
 ];
 
 const testimonials = [
@@ -234,7 +234,13 @@ export default function HomePage() {
 
       {/* FOUNDER */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', background: '#0f0f0f', borderTop: '1px solid #1a1a1a' }}>
-        <div style={{ background: '#111', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '420px', fontSize: '120px' }}>👤</div>
+        <div style={{ overflow: 'hidden', minHeight: '420px' }}>
+  <img
+    src="/founder.avif"
+    alt="Founder"
+    style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', minHeight: '420px', display: 'block' }}
+  />
+</div>
         <div style={{ padding: '72px 56px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
           <div className="section-label">Our Story</div>
           <blockquote style={{ fontSize: '22px', fontWeight: 400, lineHeight: 1.6, color: '#f5f0e8', fontStyle: 'italic', marginBottom: '32px', borderLeft: '2px solid #c9a96e', paddingLeft: '24px' }}>
