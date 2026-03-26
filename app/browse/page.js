@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { useCart } from '@/components/CartContext';
 import { useSearchParams } from 'next/navigation';
@@ -13,7 +13,7 @@ const sortOptions = [
   { label: 'Top Rated', value: 'rating' },
 ];
 
-export default function BrowsePage() {
+function BrowseContent() {
   const searchParams = useSearchParams();
   const initialCategory = searchParams.get('category') || 'All';
 
@@ -97,7 +97,6 @@ export default function BrowsePage() {
         {/* SIDEBAR */}
         <aside style={{ width: '240px', flexShrink: 0, borderRight: '1px solid #1a1a1a', padding: '40px 32px' }}>
 
-          {/* CATEGORIES */}
           <div style={{ marginBottom: '48px' }}>
             <div style={{ fontFamily: 'Helvetica Neue, sans-serif', fontSize: '11px', letterSpacing: '0.25em', textTransform: 'uppercase', color: '#c9a96e', marginBottom: '20px' }}>
               Genre
@@ -120,7 +119,6 @@ export default function BrowsePage() {
             ))}
           </div>
 
-          {/* SORT */}
           <div>
             <div style={{ fontFamily: 'Helvetica Neue, sans-serif', fontSize: '11px', letterSpacing: '0.25em', textTransform: 'uppercase', color: '#c9a96e', marginBottom: '20px' }}>
               Sort By
@@ -148,7 +146,6 @@ export default function BrowsePage() {
         {/* BOOKS GRID */}
         <div style={{ flex: 1, padding: '40px 48px' }}>
 
-          {/* RESULTS COUNT */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px' }}>
             <div style={{ fontFamily: 'Helvetica Neue, sans-serif', fontSize: '13px', color: '#555', letterSpacing: '0.05em' }}>
               {loading ? 'Loading...' : `${books.length} titles found`}
@@ -158,12 +155,11 @@ export default function BrowsePage() {
             </div>
           </div>
 
-          {/* LOADING */}
           {loading && (
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '32px' }}>
               {[...Array(6)].map((_, i) => (
                 <div key={i}>
-                  <div style={{ background: '#111', aspectRatio: '2/3', marginBottom: '16px', animation: 'pulse 1.5s infinite' }} />
+                  <div style={{ background: '#111', aspectRatio: '2/3', marginBottom: '16px' }} />
                   <div style={{ background: '#111', height: '12px', marginBottom: '8px', width: '60%' }} />
                   <div style={{ background: '#111', height: '10px', width: '40%' }} />
                 </div>
@@ -171,7 +167,6 @@ export default function BrowsePage() {
             </div>
           )}
 
-          {/* EMPTY STATE */}
           {!loading && books.length === 0 && (
             <div style={{ textAlign: 'center', padding: '80px 0' }}>
               <div style={{ fontSize: '64px', marginBottom: '24px' }}>📭</div>
@@ -187,7 +182,6 @@ export default function BrowsePage() {
             </div>
           )}
 
-          {/* BOOKS */}
           {!loading && books.length > 0 && (
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '32px' }}>
               {books.map(book => (
@@ -237,9 +231,19 @@ export default function BrowsePage() {
         </div>
       </div>
 
-      {/* TOAST */}
       <div className={`toast ${toast ? 'show' : ''}`}>Added to cart</div>
-
     </main>
+  );
+}
+
+export default function BrowsePage() {
+  return (
+    <Suspense fallback={
+      <main style={{ background: '#0a0a0a', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ fontFamily: 'Helvetica Neue, sans-serif', fontSize: '11px', letterSpacing: '0.25em', textTransform: 'uppercase', color: '#c9a96e' }}>Loading...</div>
+      </main>
+    }>
+      <BrowseContent />
+    </Suspense>
   );
 }
